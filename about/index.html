@@ -613,14 +613,14 @@
   
   <script type="text/javascript">
     var GUEST = ['nick','mail','link'];
-    var guest = 'nick,mail,link';
+    var guest = 'nick,mail';
     guest = guest.split(',').filter(item=>{
       return GUEST.indexOf(item)>-1;
     });
     new Valine({
         el: '#comments' ,
         verify: false,
-        notify: false,
+        notify: true,
         appId: '2toaaxbQF1oG3SAIwBgmSo0P-gzGzoHsz',
         appKey: 'j1dPdXDJ9iUqX7FvRuMhEMY5',
         placeholder: 'Just go go',
