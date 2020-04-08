@@ -4,14 +4,13 @@ date: 2020-03-30 18:52:03
 categories: 科普 
 tags: 技术
 ---
-(未完待续)
-以下操作没有强调需要用哪个用户说都都可以，强调用root的一定要用root。
+以下操作没有强调需要用哪个用户说明都可以，强调用root的一定要用root。
 
 ## 修改网络配置
 
 ### 修改主机名
 
-在每一台主机上修改/etc/hosts,添加IP绑定
+在每一台主机上修改`/etc/hosts`，添加IP绑定
 ```sh
 # 192.168.178.176 rasparripi (注释掉这一行)
 
@@ -21,32 +20,35 @@ tags: 技术
 192.168.178.87 worker3
 192.168.178.57 brotherhood
 ```
-在对应的主机上修改/etc/hostname，更改主机名和/etc/hosts里面的一致
+在对应的主机上修改`/etc/hostname`，更改主机名和/etc/hosts里面的一致
 ```sh
 # rasparrypi (注释掉原来的主机名)
 master
 ```
 重启所有主机使主机名生效
 ```sh
-pi@master 主机名已经生效
+pi@master #主机名已经生效
 ```
 
 ### 修改ssh登陆方式
 
-在每一台主机上修改/etc/ssh/sshd_config文件，将以下三项开启yes状态
+在每一台主机上修改`/etc/ssh/sshd_config`文件，将以下三项开启yes状态
 ```sh
 PermitRootLogin yes
 PermitEmptyPasswords yes
 PasswordAuthentication yes
 ```
-这样允许以root登录，并开启免密码登录。以后master需要免密登录workers，然后重启ssh服务
+然后重启ssh服务
 ```sh
 service ssh restart
 ```
+这样允许master节点免密码登录所有workes节点的root账户。
 
 ### 添加ssh免密登录
 
-以下操作都用root身份。因为权限问题需要master的root用户和所有worker的root用户通信，建立起hadoop和spark集群。在每一台主机上生成rsa公私钥匙对。
+以下操作都用**root身份**。因为权限我将所有文件放在了`/opt/`，所以只有每个节点的root用户有权限操作这些文件（新建、写入、修改），所以需要master节点的root用户和所有worker节点的root用户通信，才能建立起hadoop和spark集群。
+
+在每一台主机上生成rsa公私钥匙对。
 ```sh
 ssh-keygen -t rsa
 ```
@@ -63,7 +65,7 @@ ssh localhost
 ```sh
 scp id_rsa.pub root@worker1:/home/root
 ```
-登录相应主机root用户
+登录相应主机的root用户
 ```sh
 cat ~/id_rsa.pub >> ~/.ssh/authorized_keys
 rm ~/id_rsa.pub
@@ -75,18 +77,22 @@ ssh worker2
 ssh worker3
 ssh brotherhood
 ```
-此时应该是需要输入`yes`以信任远程主机，不需要再输入密码。
+此时只需要输入“yes”以信任远程主机，不需要再输入密码。
 
 ## 准备安装包
 
-java1.8
-hadoop3.1.3
-scala2.12
-spark2.4.5-bin-hadoop2.7
+| 软件   |  版本  |
+|  ---   |  ---  |
+|  java  |  1.8  |
+| hadoop | 3.1.3 |
+|  scala | 2.12  |
+|  spark | 2.4.5-bin-hadoop2.7 |
+
+注意软件版本的匹配，尤其是java、scala和spark的版本。
 
 ## 安装java
 
-在所有主机上将java安装至/opt/。位置不是必须的，根据个人喜好来。
+在所有主机上将java安装至`/opt/`。位置不是必须的，根据个人喜好来。
 ```sh
 cp java.tar.gz /opt/
 cd /opt/
@@ -96,7 +102,7 @@ mv java jdk
 
 ### 配置环境变量
 
-在每个主机上修改/etc/profile。
+在每个主机上修改`/etc/profile`。
 ```sh
 export JAVA_HOME=/opt/jdk
 export JRE_HOME=/opt/jdk/jre
@@ -111,7 +117,7 @@ java -version
 
 ## 安装hadoop
 
-在所有主机上将hadoop安装到`/opt/`，因为我安装在了`/opt/`下，所以上边的ssh和之后的很多操作都是以root进行的。
+在所有主机上将hadoop安装到`/opt/`，因为我安装在了`/opt/`下，所以上边的ssh和之后的很多操作都是以**root**进行的。
 ```sh
 cp hadoop.tar.gz /opt/
 cd /opt/
@@ -126,7 +132,7 @@ mkdir dfs/node
 
 ### 配置环境变量
 
-在所有主机上修改/etc/profile，添加如下内容
+在每个主机上修改`/etc/profile`，添加如下内容
 ```sh
 export HADOOP_HOME=/opt/hadoop-3.0.0
 export HADOOP_COMMON_LIB_NATIVE_DIR=$HADOOP_HOME/lib/native
@@ -155,6 +161,7 @@ export YARN_NODEMANAGER_USER="root"
 
 #### 在core-site.xml中添加
 
+文件中的`master`是作为master节点的主机名，以下所有配置文件同理。
 ```sh
 <configuration>
     <property>  
@@ -271,11 +278,11 @@ workre2
 worker3
 brotherhood
 ```
-workers这个文件里说明所有用作datanode的主机名，master只用作namenode所以不需要添加进来。
+workers这个文件里说明所有用作datanode的主机名，我的master只用作namenode所以没有添加进来。
 
 #### 分发文件
 
-将上述6个文件分发到所有其他主机。只需要分发覆盖，不需要改动，所有主机的hadoop配置都是完全一样的。或者也可以直再master上安装hadoop并配置，然后将整个hadoop-3.1.3发送到其他主机上。
+将上述6个文件分发到所有其他主机。只需要分发覆盖，不需要改动，所有主机的hadoop配置都是完全一样的。或者也可以只在master上安装hadoop并配置，然后将整个hadoop-3.1.3发送到其他主机上。
 ```sh
 scp hadoop-env.sh root@worker1:/opt/hadoop-3.1.3/etc/hadoop
 # 或者
@@ -286,11 +293,11 @@ scp -r hadoop root@worker2:/opt/hadoop-3.1.3/etc
 
 #### 检测hadoop是否能启动
 
-进入hadoop-3.1.3/bin/，格式化新的文件系统
+进入`hadoop-3.1.3/bin/`，格式化新的文件系统
 ```sh
 ./hadoop namenode -format
 ```
-进入hadoop-3.3.1/sbin/启动hadoop
+进入`hadoop-3.3.1/sbin/`启动hadoop
 ```sh
 ./start-all.sh
 ```
@@ -299,12 +306,17 @@ scp -r hadoop root@worker2:/opt/hadoop-3.1.3/etc
 http://192.168.178.176:8088/cluster/nodes
 http://192.168.178.176:9870
 ```
-使用jps检测所有进程是否正常运行
+在终端中输入`jps`检测所有进程是否正常运行
 ```sh
-master
+31632 SecondaryNameNode
+31843 ResourceManager
+31365 NameNode
+32758 Jps
 ```
 ```sh
-worker
+1904 DataNode
+2449 Jps
+2015 NodeManager
 ```
 
 ## 安装scala
@@ -331,7 +343,7 @@ source /etc/profile
 cp spark-2.4.5-bin-hadoop2.7 /opt/
 tar -zxvf spark-2.4.5-bin-hadoop2.7
 ```
-在/etc/profile中添加环境变量
+配置环境变量`/etc/profile`
 ```sh
 export SPARK_HOME=/usr/local/spark-2.3.0-bin-hadoop2.7
 export PATH=$SPARK_HOME/bin:$PATH
@@ -392,12 +404,17 @@ http://192.168.178.176:8080
 ```
 用jsp查看进程是否正常
 ```sh
-jsp
-master
+31632 SecondaryNameNode
+2739 Master
+31843 ResourceManager
+31365 NameNode
+32758 Jps
 ```
 ```sh
-jsp
-woreker
+1904 DataNode
+2449 Jps
+2375 Worker
+2015 NodeManager
 ```
 运行`spark2.4.5-bin-hadoop2.7/examples/src/main/python`中的一个例子检测是否正常
 ```sh
