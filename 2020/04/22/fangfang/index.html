@@ -89,7 +89,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://i.imgur.com/e6rBpql.png">
 <meta property="og:image" content="https://i.imgur.com/KzPCfGw.png">
-<meta property="og:updated_time" content="2020-04-22T21:34:04.549Z">
+<meta property="og:updated_time" content="2020-04-22T21:36:36.887Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="到底什么人写日记？">
 <meta name="twitter:description" content="要论中国人，必须不被搽在表面的自欺欺人的脂粉所诓骗，却看看他的筋骨和脊梁。自信力的有无，状元宰相的文章是不足为据的，要自己去看地底下。鲁迅  前一段时间方方日记闹的沸沸扬扬，一边说是反华走狗，一边说是文革余孽。但我肯定，跟风说这件事的人，一大半都没有全部看完过方方日记。总字数有12万+，没有视频，没有图片，没有段子，我真就不信习惯了刷微博的人能耐心看完这么多字，有时间看完这么多字。就为了能玩梗？">
@@ -765,7 +765,192 @@
 <blockquote>
 <p>简单说明一下<a href="/demo/lda_7.html">结果</a>里的图例。圆圈面积表示话题出现的概率，右侧的λ是一个权值，λ越大越看重每个词在topic里面出现的概率，越小表示不仅考虑每个词在topic里出现的概率，更考虑这个词总的出现概率。比如“的”可能在每个topic里出现概率都很高，可是因为“的”到处都是，所以不能作为代表词。λ根据经验在0.2~0.4比较好，我选的0.29.</p>
 </blockquote>
-<iframe allowtransparency="yes" frameborder="0" width="300" height="300" src="/demo/lda_7.html"><br><br>### 文章的主题分布<br><br>在确定了所有主题之后，我们就要开始对比各个媒体的文章在各个主题上的分布（我爬了这么多数据，不好好分析一下我好亏啊）。我下面表格里标出来各个媒体的最关注和最不关注的主题，以及方方日记里的主题分布。考虑这几个媒体的立场，LDA模型的拟合还是很不错的几乎和预料中的一致。有几个我很关注的点，首先topic2关注度最高的居然不是美国媒体，而是德国之声……而且，topic2在国内媒体上也有高的关注度，尤其是关注国际新闻的环球网和观察者网。<br><br>&gt; 这里topic2虽然出现了很多争议性的词语，但是并不能说明这个主题就一定是负面主题。因为只考虑了词语分布，完全没有考虑语义。而且这其实是一个包含范围很广的主题，涉及国际舆论上的各种争论。所以国内和国外的媒体都有涉及也不奇怪。<br><br>||topic1|topic2|topic3|topic4|topic5|topic6|topic7|<br>|–|–|–|–|–|–|–|–|<br>|人民网|14.0%| 3.0%| 27.4%| <strong>0.2%</strong>| 17.4%| <strong>36.5%</strong>| 1.5%|<br>|新华网|6.2%| 3.7%| 27.5%| <strong>1.6%</strong>| 17.8%| <strong>37.9%</strong>| 5.2%|<br>|环球网|8.1%| 12.6%| <strong>24.7%</strong>| <strong>1.6%</strong>| 19.8%| 21.0%| 12.0%|<br>|观察者网|4.4%| 13.5%| 20.2%| <strong>1.3%</strong>| <strong>27.3%</strong>| 23.9%| 9.1%|<br>|文汇网|2.4%| 16.1%| <strong>43.1%</strong>| <strong>0.9%</strong>| 11.1%| 18.7%| 7.7%|<br>|中国日报|2.1%| 4.7%| <strong>40.1%</strong>| <strong>1.4%</strong>| 10.6%| 36.0%| 5.0%|<br>|卫星通讯社|<strong>35.2%</strong>| 11.0%| <strong>2.2%</strong>| 11.4%| 8.0%| 11.1%| 20.2%|<br>|BBC|16.8%| 23.6%| 6.2%| 11.5%| 4.3%| <strong>2.4%</strong>| <strong>35.1%</strong>|<br>|德国之声|19.9%| 29.5%| 5.8%| 10.7%| 2.2%| <strong>1.6%</strong>| <strong>30.1%</strong>|<br>|华尔街日报|14.3%| 7.0%| 1.4%| <strong>61.6%</strong>| 9.6%| <strong>0.7%</strong>| 5.2%|<br>|纽约时报|<strong>23.2%</strong>| 22.3%| 8.6%| 9.0%| <strong>0.5%</strong>| 1.1%| 35.4%|<br>|<strong>方方日记</strong>|<strong>0.06%</strong>| 11.7%| <strong>69.4%</strong>| 0.3%| 2.1%| 0.4%| 15.9%|<br><br>我们来看方方日记在这里的分布。日记里最关注的主题是topic3和topic7，一个是民间视角的武汉疫情状况，一个是复工复产开学等经济、社会活动。和方方武汉市民的身份非常相符。然后topic2和topic6的关注度足以说明日记并不是以一个国内主流角度来看待武汉的方方面面的，这也说明了为什么会在微博上引发这么大的争议。对比其他媒体在这两个topic上的关注度，也可以理解为什么会在国际上引发关注。这些也都和我们观察到的实际情况相符合。日记对于topic1，病毒本身的情况，topic4，病毒的传播似乎涉及的不多，这可能也就是为什么总有人在质疑方方日记中各种各样的说法是否正确的原因之一。<br><br>&gt; 我稍微补充一下最后一句话的意思。考虑一个场景，一个潜伏期长传染性高致死率高的新型病毒A出现在了B市。上帝视角以最优策略应对病毒，需要社区传染开始以后的第3天才能发现A人传人的特性，至少要死2000人。B市在社区传染开始的第7天内发现了A人传人的特性，最终死亡2001人。B市以前经历的最严重的传染病无症状时不传染，立刻发现人传人，且只死亡200人。不考虑病毒特性，B市简直糟糕透顶。但是以上帝视角考虑病毒特性就知道B市的应对简直是人类之光。所以完全不考虑病毒本身就去判断决策正确性有失偏颇。<br><br>## Doc2Vec文章相似度<br><br>以上的LDA是基于词袋，就是认为一篇文章就是一个装满了各种词语的袋子，不考虑词语上下文。但很多时候上下文非常重要。举个例子：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">我送你一朵新西兰花</span><br></pre></td></tr></table></figure><br><br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">这可是今天刚上货的新西兰花</span><br></pre></td></tr></table></figure><br><br>因为同义词的存在，上下文导致语义不同，第一个文档和其他与蔬菜有关的更相似，第二个和其他鲜花有关的更相似。所以Doc2Vec可以基于所有语料进行学习，然后在考虑上下文的情况下将每篇文章映射到一个向量空间。文档相似度就是向量空间里的距离。<br><br>然后我们看看方方日记和哪些文章最相似。<br><br>|相似|文本|<br>|:–:|:–:|<br>|<a href="https://www.dw.com/zh/%E6%AD%A6%E6%B1%89%E6%97%A5%E8%AE%B0%E9%95%BF%E6%AD%8C%E5%BD%93%E5%93%AD/a-52431933" target="_blank" rel="noopener">德国之声 武汉日记：长歌当哭</a>|<a href="http://wenhui.whb.cn/zhuzhan/xinwen/20200309/331724.html" target="_blank" rel="noopener">文汇网 专访六六：我拒绝的，和我想写的</a>|<br>|<a href="https://cn.nytimes.com/china/20200415/coronavirus-china-fang-fang-author/" target="_blank" rel="noopener">纽约时报 方方的武汉日记和一场政治风暴</a>|<a href="http://www.xinhuanet.com/politics/2020-01/31/c_1125515295.htm" target="_blank" rel="noopener">新华网 武汉民警一线抗疫日记：为他们平安，我们愿逆行而上</a>|<br>|<a href="https://society.huanqiu.com/article/9CaKrnKpON5" target="_blank" rel="noopener">环球网 疫情下的武汉人：珍惜“梗朋友”，不爱“阴倒搞”</a>|<a href="https://www.dw.com/zh/%E9%95%BF%E5%B9%B3%E8%A7%82%E5%AF%9F%E6%9D%8E%E6%96%87%E4%BA%AE%E5%BE%AE%E5%8D%9A%E4%B8%AD%E5%9B%BD%E5%93%AD%E5%A2%99%E4%B8%8B%E7%9A%84%E6%8A%97%E8%AE%AE/a-52862102" target="_blank" rel="noopener">德国之声 长平观察：李文亮微博—“中国哭墙”下的抗议</a>|<br>|<a href="https://www.dw.com/zh/%E8%BF%98%E8%A6%81%E6%9C%89%E5%A4%9A%E5%B0%91%E6%9D%8E%E6%96%87%E4%BA%AE%E6%89%8D%E4%BC%9A%E8%AE%A9%E5%93%A8%E5%A3%B0%E5%98%B9%E4%BA%AE/a-52295308" target="_blank" rel="noopener">德国之声 还要有多少李文亮才会让哨声嘹亮？</a>|<a href="https://cul.huanqiu.com/article/3xHQy52DrG1" target="_blank" rel="noopener">环球网 原创条漫“自述”武汉 宛若“人在画中游”</a>|<br>|<a href="https://www.dw.com/zh/%E6%AD%A6%E6%B1%89%E6%97%A5%E8%AE%B0%E5%85%83%E5%AE%B5%E8%8A%82/a-52311158" target="_blank" rel="noopener">德国之声 武汉日记：元宵节</a>|<a href="https://www.dw.com/zh/%E6%AD%A6%E6%B1%89%E6%97%A5%E8%AE%B0%E5%BA%A6%E6%97%A5%E5%A6%82%E5%B9%B4/a-52498004" target="_blank" rel="noopener">德国之声 武汉日记：度日如年</a>|<br>|<a href="https://cn.nytimes.com/china/20200208/china-coronavirus-doctor-death/" target="_blank" rel="noopener">纽约时报 “吹哨者”李文亮之死引众怒，中国网民发起反抗</a>|<a href="https://www.dw.com/zh/%E6%9A%B4%E5%8A%9B%E9%98%B2%E7%96%AB%E5%BC%95%E4%BC%97%E6%80%92-%E7%BD%91%E5%8F%8B%E5%9B%9E%E5%88%B0%E7%BA%A2%E5%8D%AB%E5%85%B5%E6%97%B6%E4%BB%A3/a-52409071" target="_blank" rel="noopener">德国之声 暴力防疫引众怒 网友：回到红卫兵时代</a>|<br><br>以上列出的是和方方日记最相近的10篇文章。总所周知，前十有十二个。其实是，因为有随机因子的存在，每次doc2vec学到的模型不一样，这个模型又不能想LDA一样靠可视化确定哪个更好，所以我就把结果综合上来了。还是挺集中的试了好多模型只出了十二篇文章。基本和上面主题分析出来的结果一致。而且这个结果结合最近方方日记要在德国出版，拟合完美。<br><br>## 日记摘要<br><br>最后，我利用textRank算法，找出来方方日记的关键词、总体摘要，以及60篇日记分别的摘要。没兴趣看12万+原版，又特别感兴趣的可以去看摘要版。所有摘要和关键词也都是通过机器找出来的，所以会有语句不通的情况，但是也可以保证不存在认为刻意的断章取义。摘要在<a href="https://github.com/procedure2012/fangfangDiary/blob/master/data/fangfangAbstract.txt" target="_blank" rel="noopener">这里</a>。<br><br>—<br><br>## 完结撒花<br><br><iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="330" height="86" src="//music.163.com/outchain/player?type=2&id=29719528&auto=0&height=66"></iframe>
+<h3 id="文章的主题分布"><a href="#文章的主题分布" class="headerlink" title="文章的主题分布"></a>文章的主题分布</h3><p>在确定了所有主题之后，我们就要开始对比各个媒体的文章在各个主题上的分布（我爬了这么多数据，不好好分析一下我好亏啊）。我下面表格里标出来各个媒体的最关注和最不关注的主题，以及方方日记里的主题分布。考虑这几个媒体的立场，LDA模型的拟合还是很不错的几乎和预料中的一致。有几个我很关注的点，首先topic2关注度最高的居然不是美国媒体，而是德国之声……而且，topic2在国内媒体上也有高的关注度，尤其是关注国际新闻的环球网和观察者网。</p>
+<blockquote>
+<p>这里topic2虽然出现了很多争议性的词语，但是并不能说明这个主题就一定是负面主题。因为只考虑了词语分布，完全没有考虑语义。而且这其实是一个包含范围很广的主题，涉及国际舆论上的各种争论。所以国内和国外的媒体都有涉及也不奇怪。</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>topic1</th>
+<th>topic2</th>
+<th>topic3</th>
+<th>topic4</th>
+<th>topic5</th>
+<th>topic6</th>
+<th>topic7</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>人民网</td>
+<td>14.0%</td>
+<td>3.0%</td>
+<td>27.4%</td>
+<td><strong>0.2%</strong></td>
+<td>17.4%</td>
+<td><strong>36.5%</strong></td>
+<td>1.5%</td>
+</tr>
+<tr>
+<td>新华网</td>
+<td>6.2%</td>
+<td>3.7%</td>
+<td>27.5%</td>
+<td><strong>1.6%</strong></td>
+<td>17.8%</td>
+<td><strong>37.9%</strong></td>
+<td>5.2%</td>
+</tr>
+<tr>
+<td>环球网</td>
+<td>8.1%</td>
+<td>12.6%</td>
+<td><strong>24.7%</strong></td>
+<td><strong>1.6%</strong></td>
+<td>19.8%</td>
+<td>21.0%</td>
+<td>12.0%</td>
+</tr>
+<tr>
+<td>观察者网</td>
+<td>4.4%</td>
+<td>13.5%</td>
+<td>20.2%</td>
+<td><strong>1.3%</strong></td>
+<td><strong>27.3%</strong></td>
+<td>23.9%</td>
+<td>9.1%</td>
+</tr>
+<tr>
+<td>文汇网</td>
+<td>2.4%</td>
+<td>16.1%</td>
+<td><strong>43.1%</strong></td>
+<td><strong>0.9%</strong></td>
+<td>11.1%</td>
+<td>18.7%</td>
+<td>7.7%</td>
+</tr>
+<tr>
+<td>中国日报</td>
+<td>2.1%</td>
+<td>4.7%</td>
+<td><strong>40.1%</strong></td>
+<td><strong>1.4%</strong></td>
+<td>10.6%</td>
+<td>36.0%</td>
+<td>5.0%</td>
+</tr>
+<tr>
+<td>卫星通讯社</td>
+<td><strong>35.2%</strong></td>
+<td>11.0%</td>
+<td><strong>2.2%</strong></td>
+<td>11.4%</td>
+<td>8.0%</td>
+<td>11.1%</td>
+<td>20.2%</td>
+</tr>
+<tr>
+<td>BBC</td>
+<td>16.8%</td>
+<td>23.6%</td>
+<td>6.2%</td>
+<td>11.5%</td>
+<td>4.3%</td>
+<td><strong>2.4%</strong></td>
+<td><strong>35.1%</strong></td>
+</tr>
+<tr>
+<td>德国之声</td>
+<td>19.9%</td>
+<td>29.5%</td>
+<td>5.8%</td>
+<td>10.7%</td>
+<td>2.2%</td>
+<td><strong>1.6%</strong></td>
+<td><strong>30.1%</strong></td>
+</tr>
+<tr>
+<td>华尔街日报</td>
+<td>14.3%</td>
+<td>7.0%</td>
+<td>1.4%</td>
+<td><strong>61.6%</strong></td>
+<td>9.6%</td>
+<td><strong>0.7%</strong></td>
+<td>5.2%</td>
+</tr>
+<tr>
+<td>纽约时报</td>
+<td><strong>23.2%</strong></td>
+<td>22.3%</td>
+<td>8.6%</td>
+<td>9.0%</td>
+<td><strong>0.5%</strong></td>
+<td>1.1%</td>
+<td>35.4%</td>
+</tr>
+<tr>
+<td><strong>方方日记</strong></td>
+<td><strong>0.06%</strong></td>
+<td>11.7%</td>
+<td><strong>69.4%</strong></td>
+<td>0.3%</td>
+<td>2.1%</td>
+<td>0.4%</td>
+<td>15.9%</td>
+</tr>
+</tbody>
+</table>
+<p>我们来看方方日记在这里的分布。日记里最关注的主题是topic3和topic7，一个是民间视角的武汉疫情状况，一个是复工复产开学等经济、社会活动。和方方武汉市民的身份非常相符。然后topic2和topic6的关注度足以说明日记并不是以一个国内主流角度来看待武汉的方方面面的，这也说明了为什么会在微博上引发这么大的争议。对比其他媒体在这两个topic上的关注度，也可以理解为什么会在国际上引发关注。这些也都和我们观察到的实际情况相符合。日记对于topic1，病毒本身的情况，topic4，病毒的传播似乎涉及的不多，这可能也就是为什么总有人在质疑方方日记中各种各样的说法是否正确的原因之一。</p>
+<blockquote>
+<p>我稍微补充一下最后一句话的意思。考虑一个场景，一个潜伏期长传染性高致死率高的新型病毒A出现在了B市。上帝视角以最优策略应对病毒，需要社区传染开始以后的第3天才能发现A人传人的特性，至少要死2000人。B市在社区传染开始的第7天内发现了A人传人的特性，最终死亡2001人。B市以前经历的最严重的传染病无症状时不传染，立刻发现人传人，且只死亡200人。不考虑病毒特性，B市简直糟糕透顶。但是以上帝视角考虑病毒特性就知道B市的应对简直是人类之光。所以完全不考虑病毒本身就去判断决策正确性有失偏颇。</p>
+</blockquote>
+<h2 id="Doc2Vec文章相似度"><a href="#Doc2Vec文章相似度" class="headerlink" title="Doc2Vec文章相似度"></a>Doc2Vec文章相似度</h2><p>以上的LDA是基于词袋，就是认为一篇文章就是一个装满了各种词语的袋子，不考虑词语上下文。但很多时候上下文非常重要。举个例子：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">我送你一朵新西兰花</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">这可是今天刚上货的新西兰花</span><br></pre></td></tr></table></figure>
+<p>因为同义词的存在，上下文导致语义不同，第一个文档和其他与蔬菜有关的更相似，第二个和其他鲜花有关的更相似。所以Doc2Vec可以基于所有语料进行学习，然后在考虑上下文的情况下将每篇文章映射到一个向量空间。文档相似度就是向量空间里的距离。</p>
+<p>然后我们看看方方日记和哪些文章最相似。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">相似</th>
+<th style="text-align:center">文本</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><a href="https://www.dw.com/zh/%E6%AD%A6%E6%B1%89%E6%97%A5%E8%AE%B0%E9%95%BF%E6%AD%8C%E5%BD%93%E5%93%AD/a-52431933" target="_blank" rel="noopener">德国之声 武汉日记：长歌当哭</a></td>
+<td style="text-align:center"><a href="http://wenhui.whb.cn/zhuzhan/xinwen/20200309/331724.html" target="_blank" rel="noopener">文汇网 专访六六：我拒绝的，和我想写的</a></td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="https://cn.nytimes.com/china/20200415/coronavirus-china-fang-fang-author/" target="_blank" rel="noopener">纽约时报 方方的武汉日记和一场政治风暴</a></td>
+<td style="text-align:center"><a href="http://www.xinhuanet.com/politics/2020-01/31/c_1125515295.htm" target="_blank" rel="noopener">新华网 武汉民警一线抗疫日记：为他们平安，我们愿逆行而上</a></td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="https://society.huanqiu.com/article/9CaKrnKpON5" target="_blank" rel="noopener">环球网 疫情下的武汉人：珍惜“梗朋友”，不爱“阴倒搞”</a></td>
+<td style="text-align:center"><a href="https://www.dw.com/zh/%E9%95%BF%E5%B9%B3%E8%A7%82%E5%AF%9F%E6%9D%8E%E6%96%87%E4%BA%AE%E5%BE%AE%E5%8D%9A%E4%B8%AD%E5%9B%BD%E5%93%AD%E5%A2%99%E4%B8%8B%E7%9A%84%E6%8A%97%E8%AE%AE/a-52862102" target="_blank" rel="noopener">德国之声 长平观察：李文亮微博—“中国哭墙”下的抗议</a></td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="https://www.dw.com/zh/%E8%BF%98%E8%A6%81%E6%9C%89%E5%A4%9A%E5%B0%91%E6%9D%8E%E6%96%87%E4%BA%AE%E6%89%8D%E4%BC%9A%E8%AE%A9%E5%93%A8%E5%A3%B0%E5%98%B9%E4%BA%AE/a-52295308" target="_blank" rel="noopener">德国之声 还要有多少李文亮才会让哨声嘹亮？</a></td>
+<td style="text-align:center"><a href="https://cul.huanqiu.com/article/3xHQy52DrG1" target="_blank" rel="noopener">环球网 原创条漫“自述”武汉 宛若“人在画中游”</a></td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="https://www.dw.com/zh/%E6%AD%A6%E6%B1%89%E6%97%A5%E8%AE%B0%E5%85%83%E5%AE%B5%E8%8A%82/a-52311158" target="_blank" rel="noopener">德国之声 武汉日记：元宵节</a></td>
+<td style="text-align:center"><a href="https://www.dw.com/zh/%E6%AD%A6%E6%B1%89%E6%97%A5%E8%AE%B0%E5%BA%A6%E6%97%A5%E5%A6%82%E5%B9%B4/a-52498004" target="_blank" rel="noopener">德国之声 武汉日记：度日如年</a></td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="https://cn.nytimes.com/china/20200208/china-coronavirus-doctor-death/" target="_blank" rel="noopener">纽约时报 “吹哨者”李文亮之死引众怒，中国网民发起反抗</a></td>
+<td style="text-align:center"><a href="https://www.dw.com/zh/%E6%9A%B4%E5%8A%9B%E9%98%B2%E7%96%AB%E5%BC%95%E4%BC%97%E6%80%92-%E7%BD%91%E5%8F%8B%E5%9B%9E%E5%88%B0%E7%BA%A2%E5%8D%AB%E5%85%B5%E6%97%B6%E4%BB%A3/a-52409071" target="_blank" rel="noopener">德国之声 暴力防疫引众怒 网友：回到红卫兵时代</a></td>
+</tr>
+</tbody>
+</table>
+<p>以上列出的是和方方日记最相近的10篇文章。总所周知，前十有十二个。其实是，因为有随机因子的存在，每次doc2vec学到的模型不一样，这个模型又不能想LDA一样靠可视化确定哪个更好，所以我就把结果综合上来了。还是挺集中的试了好多模型只出了十二篇文章。基本和上面主题分析出来的结果一致。而且这个结果结合最近方方日记要在德国出版，拟合完美。</p>
+<h2 id="日记摘要"><a href="#日记摘要" class="headerlink" title="日记摘要"></a>日记摘要</h2><p>最后，我利用textRank算法，找出来方方日记的关键词、总体摘要，以及60篇日记分别的摘要。没兴趣看12万+原版，又特别感兴趣的可以去看摘要版。所有摘要和关键词也都是通过机器找出来的，所以会有语句不通的情况，但是也可以保证不存在认为刻意的断章取义。摘要在<a href="https://github.com/procedure2012/fangfangDiary/blob/master/data/fangfangAbstract.txt" target="_blank" rel="noopener">这里</a>。</p>
+<hr>
+<h2 id="完结撒花"><a href="#完结撒花" class="headerlink" title="完结撒花"></a>完结撒花</h2><iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="330" height="86" src="//music.163.com/outchain/player?type=2&id=29719528&auto=0&height=66"></iframe>
 
 <p>终于弄完了，总共耗时5天，花费1$（订阅华尔街日本）+27￥（翻墙回国上人民网）。这几天真是要累死了，先要找到分析方向，然后搜集资料，整理数据，统计结果，然后再好好的呈现出来。感觉这个真的就好像提纯一样，一大堆东西塞进去，最后搞出来一两滴，还不知道好坏，也许时间就全浪费了。其实一开始我还把鲁迅胡适写的东西找了出来想对比一下，但是主题差异太大了。还好新闻语料分析的结果我非常满意，和我对这件事的感觉基本一致。</p>
 <p>我其实是想说点什么的，虽我很努力的想要保持客观的态度，但我觉得我的想法或多或少都会在上面的评价中展现出来。但是就在今天，我看到了好多新闻：“马前卒反华公知！”、“高福论文写完了吗？”“英国论文证明了美国才是发源地！”“外国人XXXX”……至于ins，twitter上的评论，看一次血压高一次……感觉整个世界的网络在疫情问题上都陷入了一种疯狂，人们的言论越来越极端，只有仇恨和敌对才能引起人们点开去看的兴趣，而媒体很乐意去迎合人们。至于科学、合作已经近乎绝迹。几个月前，网上还在歧视武汉人，几个月后就高呼“武汉万岁”，然后把枪口对准了外国人。中国和外国的网友们都在拼命试图证明对方才是疫情的发源地，然后默认了谁是发源地谁就要承担责任？找出发源地不是为了控制疫情，而是为了给其他人扣上帽子。如果几个月后因为境外输入国内二次爆发，到时候不知道又会出现什么样的魔幻情况。倒是我觉得政府没有失了智一样加入到鼓动民粹的行列而是继续派医疗队，送物资，重新统计湖北数据，让我觉得很不错。</p>
@@ -776,7 +961,7 @@
 </blockquote>
 <p>总之一句话，我再看这种东西我就是sb！</p>
 <p><a href="https://imgur.com/KzPCfGw.png" target="_blank" rel="noopener"><img src="https://i.imgur.com/KzPCfGw.png" title="正经人"></a></p>
-</iframe>
+
       
     </div>
     
@@ -985,7 +1170,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#背景语料"><span class="nav-number">1.</span> <span class="nav-text">背景语料</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LDA主题分析"><span class="nav-number">2.</span> <span class="nav-text">LDA主题分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#背景主题"><span class="nav-number">2.1.</span> <span class="nav-text">背景主题</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#背景语料"><span class="nav-number">1.</span> <span class="nav-text">背景语料</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LDA主题分析"><span class="nav-number">2.</span> <span class="nav-text">LDA主题分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#背景主题"><span class="nav-number">2.1.</span> <span class="nav-text">背景主题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文章的主题分布"><span class="nav-number">2.2.</span> <span class="nav-text">文章的主题分布</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Doc2Vec文章相似度"><span class="nav-number">3.</span> <span class="nav-text">Doc2Vec文章相似度</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#日记摘要"><span class="nav-number">4.</span> <span class="nav-text">日记摘要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#完结撒花"><span class="nav-number">5.</span> <span class="nav-text">完结撒花</span></a></li></ol></div>
             
 
           </div>
