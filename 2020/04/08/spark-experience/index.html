@@ -1,0 +1,1133 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="技术,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="读一些无用的书，做一些无用的事，花一些无用的时间，都是为了在一切已知之外，保留一个超越自己的机会，人生中一些很了不起的变化，就是来自这种时刻。梁文道  B站上各种各样拿树莓派组装集群的视频，看的手痒痒。所以我和同学一起也搞了一个。安装完spark和hadoop之后，我和天哥把上学期一门数据分析课程的作业移植到了我们的集群上。原先的作业是通过评论和评分的数据集训练出一个神经网络，然后根据评论预测评">
+<meta name="keywords" content="技术">
+<meta property="og:type" content="article">
+<meta property="og:title" content="大玩具的陨落和超大玩具的崛起">
+<meta property="og:url" content="http://yoursite.com/2020/04/08/spark-experience/index.html">
+<meta property="og:site_name" content="Mr.Bug&#39;s Blog">
+<meta property="og:description" content="读一些无用的书，做一些无用的事，花一些无用的时间，都是为了在一切已知之外，保留一个超越自己的机会，人生中一些很了不起的变化，就是来自这种时刻。梁文道  B站上各种各样拿树莓派组装集群的视频，看的手痒痒。所以我和同学一起也搞了一个。安装完spark和hadoop之后，我和天哥把上学期一门数据分析课程的作业移植到了我们的集群上。原先的作业是通过评论和评分的数据集训练出一个神经网络，然后根据评论预测评">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://i.imgur.com/OpWTct8.png">
+<meta property="og:image" content="https://i.imgur.com/sa2qHgm.png">
+<meta property="og:image" content="https://i.imgur.com/shMlLK4.png">
+<meta property="og:image" content="https://i.imgur.com/Fq4P6bB.png">
+<meta property="og:updated_time" content="2020-04-08T12:22:07.008Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="大玩具的陨落和超大玩具的崛起">
+<meta name="twitter:description" content="读一些无用的书，做一些无用的事，花一些无用的时间，都是为了在一切已知之外，保留一个超越自己的机会，人生中一些很了不起的变化，就是来自这种时刻。梁文道  B站上各种各样拿树莓派组装集群的视频，看的手痒痒。所以我和同学一起也搞了一个。安装完spark和hadoop之后，我和天哥把上学期一门数据分析课程的作业移植到了我们的集群上。原先的作业是通过评论和评分的数据集训练出一个神经网络，然后根据评论预测评">
+<meta name="twitter:image" content="https://i.imgur.com/OpWTct8.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/04/08/spark-experience/">
+
+
+
+
+
+  <title>大玩具的陨落和超大玩具的崛起 | Mr.Bug's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta custom-logo">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Mr.Bug's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">May the flame guide thee</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-书单">
+          <a href="/books/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-book"></i> <br>
+            
+            书单
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/08/spark-experience/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="京城八爷">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="https://i.imgur.com/ooyENmB.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.Bug's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">大玩具的陨落和超大玩具的崛起</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-08T07:11:27+02:00">
+                2020-04-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/科普/" itemprop="url" rel="index">
+                    <span itemprop="name">科普</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2020/04/08/spark-experience/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2020/04/08/spark-experience/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2020/04/08/spark-experience/" class="leancloud_visitors" data-flag-title="大玩具的陨落和超大玩具的崛起">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>读一些无用的书，做一些无用的事，花一些无用的时间，都是为了在一切已知之外，保留一个超越自己的机会，人生中一些很了不起的变化，就是来自这种时刻。<br>梁文道</p>
+</blockquote>
+<p>B站上各种各样拿树莓派组装集群的视频，看的手痒痒。所以我和同学一起也搞了一个。<a href="https://procedure2012.com/2020/03/30/spark-install-guide/" target="_blank" rel="noopener">安装</a>完spark和hadoop之后，我和天哥把上学期一门数据分析课程的作业移植到了我们的集群上。原先的作业是通过评论和评分的数据集训练出一个神经网络，然后根据评论预测评分。我们因为设备的能力限制，没有用神经网络的分布式架构tensorflow或者pytorch之类的，而是选择了主要用来做数据计算而不是机器学习的hadoop+spark的架构。然后将原来的神经网络换成了多层感知机（MLP），用spark自带的pyspark.ml库实现MLP的训练和预测。总的来说，效果并不是很好，不过我们本来也只是当组装了一个大玩具玩一玩，搞清这些分布式计算系统的一些基本用法和结构。至于效果好不好？谁在乎呢？\(￣︶￣)/</p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p>简单说一下代码结构，因为只有一个很简单的文件就不传github了。大致分成三个部分：</p>
+<ol>
+<li><p>处理数据</p>
+<ol>
+<li><p>去掉没用的符号（数字、空格、标点……）</p>
+ <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">word = eliminateEnter(word)</span><br><span class="line">word = eliminateNumber(word)</span><br><span class="line">word = eliminatePunctuation(word)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>去掉stopwords</p>
+</li>
+<li><p>将所有词变成词根</p>
+ <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (len(newWord) &gt; 0) and (word not <span class="keyword">in</span> stopwordsSet):</span><br><span class="line">    newComment.append(porter.stem(newWord.lower()))</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>word2vec</p>
+ <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">from pyspark.ml.feature import Word2Vec</span><br><span class="line">word2Vec = Word2Vec(vectorSize=10, minCount=0, inputCol=<span class="string">"comment"</span>, outputCol=<span class="string">"features"</span>)</span><br><span class="line">model = word2Vec.fit(documentDf)</span><br><span class="line">result = model.transform(documentDf)</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+<li><p>训练MLP</p>
+<ol>
+<li>将评论所有词的wordvec取平均作为评论的wordvec（这一步其实在pyspark.ml.feature的库里自动实现了，我们也是偷懒才用的这个方案）</li>
+<li><p>分出训练集和测试集</p>
+ <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">splits = result.randomSplit([0.7, 0.3], 1234)</span><br><span class="line">train_set = splits[0]</span><br><span class="line">test_set = splits[1]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>用训练集训练MLP</p>
+ <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">from pyspark.ml.classification import MultilayerPerceptronClassifier</span><br><span class="line">mlp_trainer = MultilayerPerceptronClassifier(maxIter=20, layers=[10, 5,4, 5], blockSize=1, seed=123)</span><br><span class="line">mlp_model = mlp_trainer.fit(train_set.select(<span class="string">"label"</span>,<span class="string">"features"</span>))</span><br><span class="line">result = mlp_model.transform(test_set)</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+<li><p>评估模型</p>
+<ol>
+<li>用测试集计算准确度 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">from pyspark.ml.evaluation import MulticlassClassificationEvaluator</span><br><span class="line">predictionAndLabels = result.select(<span class="string">"prediction"</span>, <span class="string">"label"</span>)</span><br><span class="line">evaluator = MulticlassClassificationEvaluator(metricName=<span class="string">"accuracy"</span>)</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+</ol>
+<p>stopwords和词根是利用python的nltk库处理的，词的word2vec和评论的word2vec是利用pyspark.ml.feature库的函数。最后的训练和测评也是利用pyspark.ml.classification库函数。</p>
+<h2 id="spark运行模式"><a href="#spark运行模式" class="headerlink" title="spark运行模式"></a>spark运行模式</h2><p>spark里面有两类节点，一类是master，它记录了所有节点的位置和各种信息，用作控制；另一种是worker，它只负责处理各种计算任务。master和worker只是对物理节点的抽象，一个物理节点可以同时用作master或者worker，也可以只运行其中之一。</p>
+<p>完成源代码之后，可以将源代码通过<code>spark-submit</code>命令提交到spark集群上。提交操作会生成一个driver用来编译python源文件成为集群可以运行的版本，然后将其分成不同的job，job可以串行也可以并行；再将每个job分成许多不同的stage，stage间的关系类似于map和reduce，map-&gt;reduce-&gt;map-&gt;reduce-&gt;……每个stage会进一步细化为一系列的task，task是数据并行，每个task执行一样的代码，但是处理不同的数据。然后集群会将这些task分配到不同的节点上去执行。</p>
+<p>执行这些划分任务的也是driver，driver可以在提交源代码的机器上运行，也可以放在集群里的某一台机器运行。这些task最终的运行是需要占用资源（内存，cpu核心……）。这些资源被封装在一个个的executor里，每一个节点可以运行多个executor。spark需要通过resource manager来协调各个节点的资源，将executor建立在各个节点之上。常用的resource manager有两种：standalone和yarn。</p>
+<p>无论用哪一种resource manager，有三个参数最为重要：executor的数量，每个executor占用的核心数，每个executor占用的内存。每个executor可以并行执行多个task，每个task使用一个核心，共用内存。两种resource manager有不太一样的设置方式来设置这些参数。</p>
+<h3 id="standalone"><a href="#standalone" class="headerlink" title="standalone"></a>standalone</h3><h4 id="num-executors"><a href="#num-executors" class="headerlink" title="num-executors"></a>num-executors</h4><p>standalone不能直接设定executor的数量，但是可以通过<code>--conf spark.cores.max</code>参数来设定最大允许分配的核心数，最大可分配的executor=最大核心数/每个executor占用的核心数。<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">spark-submit --master spark://192.168.178.176:7077 \</span><br><span class="line">            --conf spark.cores.max=4 mlp.py</span><br></pre></td></tr></table></figure></p>
+<p><code>--master</code>参数是用来指定当前使用的resource manager，<code>spark://192.168.178.176:7077</code>表示使用spark自己做资源调度。<code>--master yarn</code>表示使用yarn作为资源调度。</p>
+<h4 id="executor-memory"><a href="#executor-memory" class="headerlink" title="executor-memory"></a>executor-memory</h4><p>通过<code>--executor-memory</code>参数指定每个executor占用的内存。<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">spark-submit --master spark://192.168.178.176:7077 \</span><br><span class="line">            --conf spark.cores.max=4 \</span><br><span class="line">            --executor-memory 512M mlp.py</span><br></pre></td></tr></table></figure></p>
+<p>默认每个executor最小分配内存为512M，可以通过修改spark设置参数文件中的参数来调整，具体设置可以参考<a href="https://spark.apache.org/docs/latest/running-on-yarn.html" target="_blank" rel="noopener">官方文档</a>中各个参数的意义和<a href="#Troubleshooting">Troubleshooting</a>中的内容。</p>
+<h4 id="executor-cores"><a href="#executor-cores" class="headerlink" title="executor-cores"></a>executor-cores</h4><p>通过<code>--executor-cores</code>参数指定每个executor占用的内核。<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">spark-submit --master spark://192.168.178.176:7077 \</span><br><span class="line">            --conf spark.cores.max=4 \</span><br><span class="line">            --executor-memory 512M \</span><br><span class="line">            --executor-cores 2 mlp.py</span><br></pre></td></tr></table></figure></p>
+<p>如果同时设置了多个参数，最终生成的executor数量一定同时满足这些条件，并且满足物理资源的限制，num-executor=min(spark.cores.max/executor-cores, 总物理核心数/executor-cores, 总物理内存数/executor-memory)。<br><a href="https://imgur.com/OpWTct8.jpg" target="_blank" rel="noopener"><img src="https://i.imgur.com/OpWTct8.png" title="standalone运行"></a></p>
+<h3 id="yarn"><a href="#yarn" class="headerlink" title="yarn"></a>yarn</h3><h4 id="配置yarn"><a href="#配置yarn" class="headerlink" title="配置yarn"></a><a href="https://www.jianshu.com/p/31d89cc4d279" target="_blank" rel="noopener">配置yarn</a></h4><p>yarn并不是spark自带的resource manager，而是属于hadoop的resource manager，需要先启动hadoop才能使用。再使用yarn之前，需要先配置几个参数。</p>
+<p>在<code>hadoop3.1.3/etc/hadoop/capacity-scheduler.xml</code>中修改<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;property&gt;</span><br><span class="line">    &lt;name&gt;yarn.scheduler.capacity.resource-calculator&lt;/name&gt;</span><br><span class="line">    &lt;!-- &lt;value&gt;org.apache.hadoop.yarn.util.resource.DefaultResourceCalculator&lt;/value&gt; --&gt;</span><br><span class="line">    &lt;value&gt;org.apache.hadoop.yarn.util.resource.DominantResourceCalculator&lt;/value&gt;</span><br><span class="line">&lt;/property&gt;</span><br></pre></td></tr></table></figure></p>
+<p>这样在yarn在请求exectuor资源的时候才会考虑用户设定的内核限制。</p>
+<p>在<code>yarn-site.xml</code>中添加如下内容<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&lt;property&gt;</span><br><span class="line">    &lt;name&gt;yarn.nodemanager.resource.memory-mb&lt;/name&gt;</span><br><span class="line">    &lt;value&gt;1024&lt;/value&gt;</span><br><span class="line">&lt;/property&gt;</span><br><span class="line"></span><br><span class="line">&lt;property&gt;</span><br><span class="line">    &lt;name&gt;yarn.nodemanager.resource.cpu-vcores&lt;/name&gt;</span><br><span class="line">    &lt;value&gt;4&lt;/value&gt;</span><br><span class="line">&lt;/property&gt;</span><br><span class="line"></span><br><span class="line">&lt;property&gt;</span><br><span class="line">    &lt;name&gt;yarn.nodemanager.vmem-check-enabled&lt;/name&gt;</span><br><span class="line">    &lt;value&gt;<span class="literal">false</span>&lt;/value&gt;</span><br><span class="line">&lt;/property&gt;</span><br><span class="line"></span><br><span class="line">&lt;property&gt;</span><br><span class="line">    &lt;name&gt;yarn.scheduler.increment-allocation-mb&lt;/name&gt;</span><br><span class="line">    &lt;value&gt;512&lt;/value&gt;</span><br><span class="line">&lt;/property&gt;</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li><code>yarn.nodemanager.resource.memory-mb</code>规定当前配置文件所在节点可用的物理内存。yarn不能自动探测可用内存，需要用户自己指定，默认值为8G。</li>
+<li><code>yarn.nodemanager.resource.cpu-vcores</code>规定当前节点可用的虚拟内核。虚拟内核可以视为对cpu计算能力的评估，不会因为设定值高于实际值导致运行错误，只会影响运行速度，一般设置为和物理内核一样。如果有些节点有更高的计算能力，可以调高虚拟内核数量，这样可以分派更多的executor，和运算较慢的节点可以协调运行，充分利用资源。</li>
+<li><code>yarn.nodemanager.vmem-check-enabled</code>是否进行虚拟内存越界的检查。在yarn中还可以设定物理内存和虚拟内存的比值，默认为1:2.1（1M物理内存对应2.1M虚拟内存）。开启检查可以在虚拟内存超过限制（实际物理内存*2.1）时抛出异常。根据需求调整是否检查。</li>
+<li><code>yarn.scheduler.increment-allocation-mb</code>规定实际分配给每个executor的内存数应该是这个数值的整倍数，不是倍数时向上补齐。</li>
+</ul>
+<h4 id="num-executors-1"><a href="#num-executors-1" class="headerlink" title="num-executors"></a>num-executors</h4><p>通过<code>--num-executors</code>参数设置最多允许分配的executor总数量。<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">spark-submit --master yarn \</span><br><span class="line">            --num-executors 8 mlp.py</span><br></pre></td></tr></table></figure></p>
+<h4 id="executor-memory-1"><a href="#executor-memory-1" class="headerlink" title="executor-memory"></a>executor-memory</h4><p>通过<code>executor-memory</code>参数设每个executor需要占用的内存。<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">spark-submit --master yarn \</span><br><span class="line">            --num-executors 8 \</span><br><span class="line">            --executor-memory 512M mlp.py</span><br></pre></td></tr></table></figure></p>
+<h4 id="executor-cores-1"><a href="#executor-cores-1" class="headerlink" title="executor-cores"></a>executor-cores</h4><p>通过<code>executor-cores</code>参数设置每个executor需要占用的内核数。<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">spark-submit --master yarn \</span><br><span class="line">            --num-executors 8 \</span><br><span class="line">            --executor-memory 512M \</span><br><span class="line">            --executor-cores 2 mlp.py</span><br></pre></td></tr></table></figure></p>
+<p>如果同时设置了多个参数，yarn也会和standalone模式一样限制exectuor数量是的所有条件都被满足，并且不超出物理资源限制。<br><a href="https://imgur.com/sa2qHgm.jpg" target="_blank" rel="noopener"><img src="https://i.imgur.com/sa2qHgm.png" title="spark on yarn运行"></a></p>
+<h3 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h3><p>yarn模式还有一个特殊的概念叫做container，每个executor和一个container一一对应，在yarn的web面板里显示的是container的数量。除了分配的用于计算的container，yarn还会为每个应用建立一个ApplicationMaster用于调度，负责调度当前应用的ApplicationMaster也需要占用一个container，所以面板里显示container会比设定的num-executor多一个（在其他限制依然被满足的情况下）。ApplicationMaster的内存和核心用量可以通过修改<code>spark.yarn.am.memory（默认512M）</code>和<code>spark.yarn.am.cores（默认1）</code>修改。</p>
+<p>无论是ApplicationMaster的container还是用于计算的container，它们实际申请到的内存都是我们设定的值+max(设定值*0.1, 384M)，然后再根据<code>yarn.scheduler.increment-allocation-mb</code>的值上取整。其实上述调整standalone和yarn资源分配的参数并不唯一，都可以在<code>spark-submit -h</code>下找到足够充分的解释来自由调整，<a href="https://spark.apache.org/docs/latest/running-on-yarn.html" target="_blank" rel="noopener">官方文档</a>也给出了许多参数解释。</p>
+<h2 id="Troubleshooting"><a href="#Troubleshooting" class="headerlink" title="Troubleshooting"></a>Troubleshooting</h2><h3 id="deploy-mode"><a href="#deploy-mode" class="headerlink" title="deploy-mode"></a>deploy-mode</h3><p>之前提到的，我们提交源码所产生的driver会进行任务划分和初始化。这个driver可以运行在提交源码的机器上，也可以运行在集群里的某一台机器上。通过<code>--deploy-mode</code>参数来设置。<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 运行在提交源码的机器上（client）</span></span><br><span class="line">spark-submit --master yarn \</span><br><span class="line">            --deploy-mode client</span><br><span class="line">            --num-executors 8 \</span><br><span class="line">            --executor-memory 512M \</span><br><span class="line">            --executor-cores 2 mlp.py</span><br><span class="line"><span class="comment"># 运行在集群中某台机器上（cluster）自动分配</span></span><br><span class="line">spark-submit --master yarn \</span><br><span class="line">            --deploy-mode cluster</span><br><span class="line">            --num-executors 8 \</span><br><span class="line">            --executor-memory 512M \</span><br><span class="line">            --executor-cores 2 mlp.py</span><br></pre></td></tr></table></figure></p>
+<h3 id="master开启hadoop之后连接不上worker"><a href="#master开启hadoop之后连接不上worker" class="headerlink" title="master开启hadoop之后连接不上worker"></a>master开启hadoop之后连接不上worker</h3><p>我们遇到的情况是因为一开始以为不仅master需要运行<code>./start-all.sh</code>，每个worker也要运行。所以导致每个worker都有各自的cluster-ID，master和worker的cluster-ID不一致肯定连不上。检查master中<code>hadoop3.1.3/dfs/name/current/VERSION</code>这个文件中的<code>cluster-ID</code>和worker中<code>hadoop3.1.3/dfs/data/current/VERSION</code>这个文件中是否一致。不一致的话将<code>current</code>文件夹全部删除，然后再master重新启动hadoop。</p>
+<h3 id="Neither-spark-yarn-jars-nor-spark-yarn-archive-is-set"><a href="#Neither-spark-yarn-jars-nor-spark-yarn-archive-is-set" class="headerlink" title="Neither spark.yarn.jars nor spark.yarn.archive is set"></a><a href="https://lovebear.top/2020/02/23/Spark_Yarn_Warning_Sparkjars/" target="_blank" rel="noopener">Neither spark.yarn.jars nor spark.yarn.archive is set</a></h3><p><code>spark-submit</code>提交应用时如果是用yarn作为resource manager的时候会出现这个warning。spark在hdfs硬盘里找不到用于支持yarn运行的jar，即使不管也不会引起任何错误，但是会导致spark在每次有任务提交的时候都要上传一次jar到hdfs的临时文件里，很费时间。<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 打包jar文件</span></span><br><span class="line">jar cv0f spark-libs.jar -C <span class="variable">$SPARK_HOME</span>/jars/ .</span><br><span class="line"><span class="comment"># 上传到hdfs</span></span><br><span class="line">hdfs dfs -mkdir -p /spark/jar</span><br><span class="line">hdfs dfs -put spark-libs.jar /spark/jar</span><br><span class="line"><span class="comment"># 配置spark</span></span><br><span class="line"><span class="built_in">cd</span> <span class="variable">$SPARK_HOME</span>/conf</span><br><span class="line">vim spark-defaults.conf</span><br><span class="line"><span class="comment"># 在spark-defaults。conf里写入</span></span><br><span class="line">spark.yarn.archive=hdfs:///spark/jar/spark-libs.jar</span><br></pre></td></tr></table></figure></p>
+<p>如果没有<code>spark-defaults.conf</code>，需要先<code>cp spark-defaults.conf.template spark-defaults.conf</code>生成一份。文中所有spark开头的配置变量（比如spark.yarn.am.memory）都可以通过这种方式定义。不过我生成<code>spark-defaults.conf</code>之后重启spark时会遇到错误，原因不明。也可以通过在<code>spark-submi</code>后面添加<code>--conf 变量名=值</code>的方式临时添加。</p>
+<h3 id="Python相关"><a href="#Python相关" class="headerlink" title="Python相关"></a>Python相关</h3><p>spark2.4.5默认使用的时python2.7，如果想用其他版本的python，可以先安装好新的版本，然后在<code>spark2.4.5/conf/spark-env.sh</code>中添加希望使用的python的路径。<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> PYSPARK_PYTHON=/usr/bin/python3</span><br></pre></td></tr></table></figure></p>
+<p><code>--deploy-mode client</code>模式下，spark时是用本地python编译完成后再将task分发给其他节点。所以只要源码中用到的库在本地是安装好的，就可以顺利完成计算，即使集群中有节点没有安装这个库。<code>--deploy-mode cluster</code>模式不太清楚……</p>
+<h2 id="我回来了"><a href="#我回来了" class="headerlink" title="我回来了"></a>我回来了</h2><p>正经的说完了，说一说我们搞出来的集群。总共有5块树莓派</p>
+<table>
+<thead>
+<tr>
+<th>主机名</th>
+<th>树莓派</th>
+<th>核心数</th>
+<th>内存</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Master</td>
+<td>4</td>
+<td>4</td>
+<td>4G</td>
+</tr>
+<tr>
+<td>worker1</td>
+<td>4</td>
+<td>4</td>
+<td>4G</td>
+</tr>
+<tr>
+<td>worker2</td>
+<td>3B</td>
+<td>4</td>
+<td>1G</td>
+</tr>
+<tr>
+<td>worker3</td>
+<td>3B</td>
+<td>4</td>
+<td>1G</td>
+</tr>
+<tr>
+<td>brotherhood</td>
+<td>4</td>
+<td>4</td>
+<td>2G</td>
+</tr>
+</tbody>
+</table>
+<p>最后一块brotherhood是我的，其他都是天哥大力支持的。可以看出其实性能非常差，造价还极高……当个大玩具看起来还是挺漂亮的，真要做点什么只怕是还不如电脑上多开几个虚拟机……<br><a href="https://imgur.com/shMlLK4.jpg" target="_blank" rel="noopener"><img src="https://i.imgur.com/shMlLK4.png" title="大号玩具，前面炫酷的是天哥的，后边几乎看不见的是我的"></a></p>
+<p>我们一开始准备的数据就是上课作业给的数据，400M的csv文件，包含评价和对应的评分。做作业时得到的预测准确率大概在50%左右，运行时间大概在15-20分钟左右。然而，同样的文件用我们的集群跑的时候直接因为内存不足崩溃了……即使只用了200M的数据依然会导致内存不够……主要是有两个1G内存的节点成为了短板。反正只是为了研究分布式计算的基本原理，所以我们用900K的数据跑了一些，结果如下</p>
+<table>
+<thead>
+<tr>
+<th>num-executors</th>
+<th>cores per executor</th>
+<th>memory per executor(MB)</th>
+<th>TIme(min)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>4</td>
+<td>4</td>
+<td>1024</td>
+<td>17</td>
+</tr>
+<tr>
+<td>4</td>
+<td>4</td>
+<td>800</td>
+<td>5.6</td>
+</tr>
+<tr>
+<td>4</td>
+<td>4</td>
+<td>600</td>
+<td>21</td>
+</tr>
+<tr>
+<td>4</td>
+<td>2</td>
+<td>600</td>
+<td>5.7</td>
+</tr>
+<tr>
+<td>4</td>
+<td>1</td>
+<td>600</td>
+<td>5.7</td>
+</tr>
+<tr>
+<td>4</td>
+<td>1</td>
+<td>800</td>
+<td>5.3</td>
+</tr>
+<tr>
+<td>5</td>
+<td>2</td>
+<td>800</td>
+<td>6</td>
+</tr>
+<tr>
+<td>5</td>
+<td>2</td>
+<td>600</td>
+<td>5.1</td>
+</tr>
+<tr>
+<td>6</td>
+<td>1</td>
+<td>600</td>
+<td>5.5</td>
+</tr>
+<tr>
+<td>7</td>
+<td>1</td>
+<td>800</td>
+<td>5</td>
+</tr>
+</tbody>
+</table>
+<p>900K训练出来的MLP准确率大概在23%左右。总体而言，大多数都是因为内存问题导致速度极慢。有的是因为内存溢出导致executor崩溃，重新连接和计算浪费大量时间。也有的是即使分配了很多的内核，但是因为内存不足以支持这么多内核同时进行计算，所以效率反倒不如同样内存但是核数更少的例子。影响速度的另一个原因可能是网络传输速度太慢，我们并没有把所有板子单独假设一个网络连接起来，而是直接用的家里现有的无线网络和路由器，传输速度肯定下降了好多倍。没有精力再单独架设网路了，所以网络和内存限制相比不清楚哪个才是主要约束……</p>
+<p>现在想买一大堆树莓派然后组装一个大玩具的想法已经完全没有了。这东西做各种嵌入式系统还可以，但对于我来说性能实在太差，起码要买上几十个才能赶上一台没有独显的电脑。那既然已经要买几十个树莓派了，我为什么不再想的大一点呢？买上几十块树莓派钱再稍微加yi点，就能搞一台多核多卡的超大号玩具了！又能自己组装，看着还倍儿有面子！不要和我说什么云服务更划算，舍得买几十块树莓派的人根本不在乎再多掏一点！<br><a href="https://imgur.com/Fq4P6bB.jpg" target="_blank" rel="noopener"><img src="https://i.imgur.com/Fq4P6bB.png" title="这都额勒金德的东西知道吗？"></a></p>
+<p>当然了，现在我既没有几十个的树莓派，也没有超大玩具，5块板子的集群还有4块是白嫖天哥的╮(￣▽￣)╭不过没关系，《大腕》里的疯言疯语十几年后不也都实现了吗？二十一世纪最重要的是什么？人才！我还是挺有信心的(ง •̀-•́)ง</p>
+<hr>
+<p>终于在新学期第一堂课开始之前把这件事也弄完了，假期真的干了好多的事情。上课之后大家都要开始忙了，所以不能在一起搞这些东西。天哥也要把他的那些板子都搬回自己家去了。只剩我一块板子也没法搞了，只能暂时和这个集群说再见了（其实我还有别的板子，但是被我搞坏了……）。不过没关系，我还给自己准备了很多很多好玩的事情，可以一件一件慢慢来~~~</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/技术/" rel="tag"># 技术</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/04/03/hello-world/" rel="next" title="Hello World">
+                <i class="fa fa-chevron-left"></i> Hello World
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/04/22/fangfang/" rel="prev" title="到底什么人写日记？">
+                到底什么人写日记？ <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://i.imgur.com/ooyENmB.png" alt="京城八爷">
+            
+              <p class="site-author-name" itemprop="name">京城八爷</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/procedure2012" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:procedure2012@hotmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.zhihu.com/people/zeratol-37/activities" target="_blank" title="Zhihu">
+                      
+                        <i class="fa fa-fw fa-weibo"></i>Zhihu</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://instagram.com/procedure2012" target="_blank" title="Instagram">
+                      
+                        <i class="fa fa-fw fa-instagram"></i>Instagram</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://i.imgur.com/p8kV2qY.jpg" target="_blank" title="WeChat">
+                      
+                        <i class="fa fa-fw fa-weixin"></i>WeChat</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#代码"><span class="nav-number">1.</span> <span class="nav-text">代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#spark运行模式"><span class="nav-number">2.</span> <span class="nav-text">spark运行模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#standalone"><span class="nav-number">2.1.</span> <span class="nav-text">standalone</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#num-executors"><span class="nav-number">2.1.1.</span> <span class="nav-text">num-executors</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#executor-memory"><span class="nav-number">2.1.2.</span> <span class="nav-text">executor-memory</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#executor-cores"><span class="nav-number">2.1.3.</span> <span class="nav-text">executor-cores</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#yarn"><span class="nav-number">2.2.</span> <span class="nav-text">yarn</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#配置yarn"><span class="nav-number">2.2.1.</span> <span class="nav-text">配置yarn</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#num-executors-1"><span class="nav-number">2.2.2.</span> <span class="nav-text">num-executors</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#executor-memory-1"><span class="nav-number">2.2.3.</span> <span class="nav-text">executor-memory</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#executor-cores-1"><span class="nav-number">2.2.4.</span> <span class="nav-text">executor-cores</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#注意"><span class="nav-number">2.3.</span> <span class="nav-text">注意</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Troubleshooting"><span class="nav-number">3.</span> <span class="nav-text">Troubleshooting</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#deploy-mode"><span class="nav-number">3.1.</span> <span class="nav-text">deploy-mode</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#master开启hadoop之后连接不上worker"><span class="nav-number">3.2.</span> <span class="nav-text">master开启hadoop之后连接不上worker</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Neither-spark-yarn-jars-nor-spark-yarn-archive-is-set"><span class="nav-number">3.3.</span> <span class="nav-text">Neither spark.yarn.jars nor spark.yarn.archive is set</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Python相关"><span class="nav-number">3.4.</span> <span class="nav-text">Python相关</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#我回来了"><span class="nav-number">4.</span> <span class="nav-text">我回来了</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">京城八爷</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: true,
+        appId: '2toaaxbQF1oG3SAIwBgmSo0P-gzGzoHsz',
+        appKey: 'j1dPdXDJ9iUqX7FvRuMhEMY5',
+        placeholder: 'Just go go',
+        avatar:'retro',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("2toaaxbQF1oG3SAIwBgmSo0P-gzGzoHsz", "j1dPdXDJ9iUqX7FvRuMhEMY5");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
